@@ -1,0 +1,26 @@
+
+.pSlider {
+    &__news-container {
+        display: block;
+        padding-block: 23px;
+    }
+
+    &__cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        row-gap: 20px;
+        justify-items: center;
+
+        & :nth-child(-n + 4) {
+            grid-column: span 2;
+        }
+
+        &--scroll {
+            grid-template-columns: repeat(8, 1fr);
+        }
+    }
+
+    &__pagination {
+        display: block;
+    }
+}

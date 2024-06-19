@@ -1,0 +1,56 @@
+@import '../../../utils/mixins.scss';
+
+.card {
+    display: block;
+    width: 100%;
+
+    @include on-desktop {   
+        max-width: 200px;
+    }
+
+    &__image-wrapper {
+        position: relative;
+
+        @include setPadding(190, 246);
+    }
+
+    &__image-entity {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 20px;
+    }
+
+    &__title {
+        display: block;
+
+        font-size: 14px;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    &__desc,
+    &__price {
+        display: block;
+
+        font-size: 14px;
+        font-weight: normal;
+        text-align: center;
+        color: #797f83;
+    }
+
+    &__price {
+        font-weight: 800;
+        color: #000;
+    }
+}

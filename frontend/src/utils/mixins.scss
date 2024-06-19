@@ -1,0 +1,22 @@
+@mixin setPadding($width, $height) {
+    position: relative;
+    width: 100%;
+    padding-bottom: calc(($height / $width) * 100%);
+}
+
+@mixin background() {
+    object-fit: cover;
+    object-position: top center;
+}
+
+@mixin on-tablet {
+    @media (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin on-desktop {
+    @media (min-width: 1280px) {
+        @content;
+    }
+}

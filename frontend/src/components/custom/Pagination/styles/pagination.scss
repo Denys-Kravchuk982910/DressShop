@@ -1,0 +1,38 @@
+.pagination { 
+    width: fit-content;
+    padding-top: 40px;
+    margin: auto;
+
+    &__list {
+        display: flex;
+        margin: auto;
+        gap: 10px;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    &__link {
+        display: block;
+        padding: 7px 8px;
+        width: 40px;
+        height: 40px;
+
+        border-radius: 20%;
+
+        border: 0.2px solid hsl(221, 14%, 86%);
+
+        font-size: 1.15em;
+        text-align: center;
+        text-decoration: none;
+        color: #2e333d;
+
+        &--active {
+            background-color: #4258ff;
+            color: #fff;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
