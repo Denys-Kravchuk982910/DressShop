@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.938ea38b.css",
+    "main.js": "/static/js/main.20ce0874.js",
+    "static/media/Raleway-VariableFont_wght.ttf": "/static/media/Raleway-VariableFont_wght.d8040b0cc740dda7550a.ttf",
+    "static/media/logo.png": "/static/media/logo.73f83196f7fbc6191159.png",
+    "index.html": "/index.html",
+    "main.938ea38b.css.map": "/static/css/main.938ea38b.css.map",
+    "main.20ce0874.js.map": "/static/js/main.20ce0874.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.938ea38b.css",
+    "static/js/main.20ce0874.js"
+  ]
+}
