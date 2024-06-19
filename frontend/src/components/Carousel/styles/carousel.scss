@@ -1,0 +1,36 @@
+@import '../../../utils/mixins.scss';
+
+.carousel {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+
+    &__carousel-slide {
+        display: block;
+        min-width: 100%;
+
+        margin-bottom: 30px;
+        transition: left 0.3s ease-in-out;
+
+        @include setPadding(480px, 230px);
+    }
+
+    &__carousel-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        @include background;
+    }
+
+    &__carousel-switcher {
+        display: flex;
+        // padding-top: 30px;
+        justify-content: center;
+        align-items: center;
+    }
+}
