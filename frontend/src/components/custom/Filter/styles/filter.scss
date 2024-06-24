@@ -11,7 +11,9 @@
     }
 
     &__hide {
-        display: none;
+        @include on-desktop {
+            display: none;
+        }
     }
 
     &__container {
