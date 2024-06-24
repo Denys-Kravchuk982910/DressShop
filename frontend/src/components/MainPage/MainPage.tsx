@@ -3,6 +3,7 @@ import { CardType } from '../Card/Card';
 import ProductSlider from '../ProductSlider';
 import Carousel from '../Carousel';
 import Poster from '../custom/Poster';
+import { Link } from 'react-router-dom';
 
 export interface Transition {
     leftPixels: number;
@@ -26,7 +27,7 @@ export const MainPage = () => {
             <h3 className='main__info-title'>LOGO IMAGE — інтернет магазин суконь</h3>
 
             <div className="main__catalog-btns">
-                <button className='main__catalog-btn'>Перейти у каталог</button>
+                <Link to="/catalog" className='main__catalog-btn'>Перейти у каталог</Link>
             </div>
         </section>
 

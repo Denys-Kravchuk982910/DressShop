@@ -15,7 +15,7 @@
     &__undermenu {
         display: none;
 
-        @include on-desktop {
+        @include on-desktop {            
             display: block;
             grid-row: 2;
             grid-column: 1 / -1;
@@ -65,6 +65,14 @@
         }
 
         &:hover {
+            color: #ff0000;
+
+            &::after {
+                width: 100%;
+            }
+        }
+
+        &--active {
             color: #ff0000;
 
             &::after {
