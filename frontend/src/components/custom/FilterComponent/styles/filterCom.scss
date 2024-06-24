@@ -1,0 +1,60 @@
+@import '../../../../utils/mixins.scss';
+
+.filterCom {
+    &__menu-link {
+        display: block;
+        height: fit-content;
+
+        font-size: 10px;
+        text-transform: uppercase;
+        color: #2b3338;
+    }
+
+    &__menu-plus {
+        display: block;
+
+        height: 15px;
+        width: 15px;
+    }
+
+    &__menu-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 13px 20px;
+        
+        border: 1px solid #e0e0e0;
+
+        @include on-desktop {
+            border: 0;
+
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+    }
+
+    &__list {
+        display: flex;
+        max-height: 0;
+        padding: 0;
+        overflow: hidden;
+
+        background-color: #f7f4f4;
+        
+        // &--open {
+        //     // max-height: 150px;
+        // }
+
+        transition: max-height 0.3s ease-in-out;
+    }
+
+    &__link {
+        display: block;
+        padding: 15px 30px;
+
+        font-size: 10px;
+        color: #2b3338;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+}

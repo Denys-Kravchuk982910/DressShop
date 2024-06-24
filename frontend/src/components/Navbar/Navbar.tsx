@@ -3,9 +3,12 @@ import { faMagnifyingGlass, faHeart, faCartShopping } from '@fortawesome/free-so
 import './styles/navbar.scss';
 import { useContext } from 'react';
 import { MenuContext } from '../../contexts/MenuContextProvider';
+import { Link, useLocation } from 'react-router-dom';
+import classNames from 'classnames';
 
 export const Navbar = () => {
     const { setOpen } = useContext(MenuContext);
+    const { pathname } = useLocation();
 
     return (<header>
         <nav className='navbar'>
@@ -46,15 +49,43 @@ export const Navbar = () => {
             <div className="navbar__undermenu">
                 <ul className="navbar__undermenu-list">
                     <li className="navbar__undermenu-item">
-                        <a href="#" className="navbar__undermenu-link">Каталог</a>
+                        <Link 
+                            to="/" 
+                            className={classNames('navbar__undermenu-link', 
+                                { 'navbar__undermenu-link--active' : pathname === '/' })}
+                        >
+                                Головна
+                        </Link>
                     </li>
 
                     <li className="navbar__undermenu-item">
-                        <a href="#" className="navbar__undermenu-link">Про нас</a>
+                        <Link 
+                            to="/catalog" 
+                            className={classNames('navbar__undermenu-link', 
+                                { 'navbar__undermenu-link--active' : pathname === '/catalog' })}
+                        >
+                                Каталог
+                        </Link>
                     </li>
 
                     <li className="navbar__undermenu-item">
-                        <a href="#" className="navbar__undermenu-link">Питання про оплаті</a>
+                        <Link 
+                            to="/about" 
+                            className={classNames('navbar__undermenu-link', 
+                                { 'navbar__undermenu-link--active' : pathname === '/about' })}
+                        >
+                                Про нас
+                        </Link>
+                    </li>
+
+                    <li className="navbar__undermenu-item">
+                        <Link 
+                            to="/payment" 
+                            className={classNames('navbar__undermenu-link', 
+                                { 'navbar__undermenu-link--active' : pathname === '/payment' })}
+                        >
+                                Питання про оплаті
+                        </Link>
                     </li>
                 </ul>
             </div>

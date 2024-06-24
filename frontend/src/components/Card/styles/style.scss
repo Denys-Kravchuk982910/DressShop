@@ -5,7 +5,9 @@
     width: 100%;
 
     @include on-desktop {   
-        max-width: 200px;
+        max-width: 300px;
+
+        margin: auto;
     }
 
     &__image-wrapper {
