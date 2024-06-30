@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/DressShop/static/css/main.744ebabc.css",
-    "main.js": "/DressShop/static/js/main.2fb26f26.js",
+    "main.css": "/DressShop/static/css/main.55cccb4d.css",
+    "main.js": "/DressShop/static/js/main.51934f32.js",
     "static/media/Raleway-VariableFont_wght.ttf": "/DressShop/static/media/Raleway-VariableFont_wght.d8040b0cc740dda7550a.ttf",
     "static/media/logo.png": "/DressShop/static/media/logo.73f83196f7fbc6191159.png",
     "index.html": "/DressShop/index.html",
-    "main.744ebabc.css.map": "/DressShop/static/css/main.744ebabc.css.map",
-    "main.2fb26f26.js.map": "/DressShop/static/js/main.2fb26f26.js.map"
+    "main.55cccb4d.css.map": "/DressShop/static/css/main.55cccb4d.css.map",
+    "main.51934f32.js.map": "/DressShop/static/js/main.51934f32.js.map"
   },
   "entrypoints": [
-    "static/css/main.744ebabc.css",
-    "static/js/main.2fb26f26.js"
+    "static/css/main.55cccb4d.css",
+    "static/js/main.51934f32.js"
   ]
 }
