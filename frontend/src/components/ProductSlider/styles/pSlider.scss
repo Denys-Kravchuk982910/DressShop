@@ -15,6 +15,16 @@
             grid-column: span 2;
         }
 
+        &--is-card {
+            display: flex;
+            overflow: hidden;
+            gap: 20px;
+
+            & :nth-child(-n + 4) {
+                min-width: 300px;
+            }
+        }
+
         &--scroll {
             grid-template-columns: repeat(8, 1fr);
         }

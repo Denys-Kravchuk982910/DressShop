@@ -13,9 +13,10 @@ export interface ProductSliderType {
     cards: CardType[];
     title: string;
     isScroll?: boolean;
+    isCard?: boolean;
 }
 
-export const ProductSlider : React.FC<ProductSliderType> = ({ cards, title, isScroll }) => {
+export const ProductSlider : React.FC<ProductSliderType> = ({ cards, title, isScroll, isCard}) => {
     const [slide, setSlide] = useState(0);
     const [perPage, setPerPage] = useState(2.3);
     const [page, setPage] = useState(1);
@@ -81,7 +82,10 @@ export const ProductSlider : React.FC<ProductSliderType> = ({ cards, title, isSc
                     </SwiperSlide>);
                     })}
             </HorizontalScroller> : 
-            <><div className={classNames('pSlider__cards', { 'pSlider__cards--scroll' : isScroll })}>
+            <><div className={classNames('pSlider__cards', 
+                { 'pSlider__cards--scroll' : isScroll },
+                {'pSlider__cards--is-card' : isCard})}
+            >
                 {getCardsUsingPagination(page).map((card, index) => {
                     return (<Card 
                         key={'card' + index}
