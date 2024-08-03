@@ -1,5 +1,17 @@
 @import '../../../utils/mixins.scss';
 
+@keyframes l11 {
+    0%   {background: conic-gradient(#f03355 0     ,#0000 0)}
+    12.5%{background: conic-gradient(#f03355 45deg ,#0000 46deg)}
+    25%  {background: conic-gradient(#f03355 90deg ,#0000 91deg)}
+    37.5%{background: conic-gradient(#f03355 135deg,#0000 136deg)}
+    50%  {background: conic-gradient(#f03355 180deg,#0000 181deg)}
+    62.5%{background: conic-gradient(#f03355 225deg,#0000 226deg)}
+    75%  {background: conic-gradient(#f03355 270deg,#0000 271deg)}
+    87.5%{background: conic-gradient(#f03355 315deg,#0000 316deg)}
+    100% {background: conic-gradient(#f03355 360deg,#0000 360deg)}
+  }
+
 .catalog {
     position: relative;
 
@@ -52,6 +64,7 @@
     }
 
     &__content-items {
+        position: relative;
         display: grid;
         padding: 40px 20px 0;
 

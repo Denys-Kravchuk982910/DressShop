@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagramSquare } from '@fortawesome/free-brands-svg-icons';
 import './stlyes/footer.scss';
+import { Link } from 'react-router-dom';
 
 export const Footer = () => {
     return (<footer className='footer'>
@@ -10,20 +11,24 @@ export const Footer = () => {
             </div>
 
             <div className="footer__socials">
-                <a href="/" className="footer__social footer__social--instagram">
+                <Link
+                    to="https://www.instagram.com/felitsiiabrand"
+                    className="footer__social footer__social--instagram"
+                    target='_blank'
+                >
                     <FontAwesomeIcon icon={faInstagramSquare} className='footer__social-icon footer__social-icon--instagram' />
-                </a>
+                </Link>
 
-                <a href="/" className="footer__social footer__social--facebook">
+                <Link to="/" className="footer__social footer__social--facebook">
                     <FontAwesomeIcon icon={faFacebook} className='footer__social-icon' />
-                </a>
+                </Link>
             </div>
 
             <div className="footer__schedule">
                 <p className='footer__schedule-title'>
                     Графік роботи
                     <br />
-                    ПН-ПТ 8:00-20:00
+                    ПН-ПТ 10:00-21:00
                 </p>
             </div>
         </div>

@@ -2,15 +2,15 @@ import { SwiperSlide } from "swiper/react";
 import BlockHeader from "../custom/BlockHeader";
 import HorizontalScroller from "../custom/HorizontalScroller";
 import Card from "../Card";
-import { CardType } from "../Card/Card";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 
 import './styles/pSlider.scss';
 import Pagination from "../custom/Pagination";
+import { ProductType } from "../../contexts/ProductContextProvider";
 
 export interface ProductSliderType {
-    cards: CardType[];
+    cards: ProductType[];
     title: string;
     isScroll?: boolean;
     isCard?: boolean;
@@ -73,11 +73,8 @@ export const ProductSlider : React.FC<ProductSliderType> = ({ cards, title, isSc
             >
                 {cards.map((card, index) => {
                     return (<SwiperSlide key={'card' + index}>
-                        <Card 
-                        title={card.title} 
-                        shortDesc={card.shortDesc} 
-                        price={card.price} 
-                        image={card.image} 
+                        <Card
+                            {...card}
                         />
                     </SwiperSlide>);
                     })}
@@ -87,13 +84,7 @@ export const ProductSlider : React.FC<ProductSliderType> = ({ cards, title, isSc
                 {'pSlider__cards--is-card' : isCard})}
             >
                 {getCardsUsingPagination(page).map((card, index) => {
-                    return (<Card 
-                        key={'card' + index}
-                        title={card.title} 
-                        shortDesc={card.shortDesc} 
-                        price={card.price} 
-                        image={card.image} 
-                        />);
+                    return (<Card key={card.title + index} {...card} />);
                     })}
             </div>
             <div className="pSlider__pagination">

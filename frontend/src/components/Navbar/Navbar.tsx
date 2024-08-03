@@ -1,14 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faHeart, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import './styles/navbar.scss';
 import { useContext } from 'react';
 import { MenuContext } from '../../contexts/MenuContextProvider';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
 export const Navbar = () => {
     const { setOpen } = useContext(MenuContext);
     const { pathname } = useLocation();
+
+    const navigate = useNavigate();
 
     return (<header>
         <nav className='navbar'>
@@ -22,7 +24,13 @@ export const Navbar = () => {
                 </div>
 
                 <p className="navbar__menu-email">
-                    <a href="/" className="navbar__menu-link">admin@gmail.com</a>
+                    <Link
+                        to="https://www.instagram.com/felitsiiabrand"
+                        target='_blank'
+                        className="navbar__menu-link"
+                    >
+                        @felitsiiabrand
+                    </Link>
                 </p>
 
                 <div className="navbar__logo">
@@ -33,15 +41,11 @@ export const Navbar = () => {
             <div className="navbar__nav">
                 <ul className="navbar__nav-items">
                     <li className="navbar__nav-item">
-                        <FontAwesomeIcon icon={faMagnifyingGlass} style={{color: '#fff'}} />
+                        <FontAwesomeIcon icon={faHeart} style={{color: '#C80036'}} onClick={() => navigate('/favourites')} />
                     </li>
 
                     <li className="navbar__nav-item">
-                        <FontAwesomeIcon icon={faHeart} style={{color: '#C80036'}} />
-                    </li>
-
-                    <li className="navbar__nav-item">
-                        <FontAwesomeIcon icon={faCartShopping} style={{color: '#ACE1AF'}} />
+                        <FontAwesomeIcon icon={faCartShopping} style={{color: '#ACE1AF'}} onClick={() => navigate('/cart')}/>
                     </li>
                 </ul>
             </div>
@@ -70,21 +74,11 @@ export const Navbar = () => {
 
                     <li className="navbar__undermenu-item">
                         <Link 
-                            to="/about" 
+                            to="/favourites" 
                             className={classNames('navbar__undermenu-link', 
-                                { 'navbar__undermenu-link--active' : pathname === '/about' })}
+                                { 'navbar__undermenu-link--active' : pathname === '/favourites' })}
                         >
-                                Про нас
-                        </Link>
-                    </li>
-
-                    <li className="navbar__undermenu-item">
-                        <Link 
-                            to="/payment" 
-                            className={classNames('navbar__undermenu-link', 
-                                { 'navbar__undermenu-link--active' : pathname === '/payment' })}
-                        >
-                                Питання про оплаті
+                                Фаворити
                         </Link>
                     </li>
                 </ul>

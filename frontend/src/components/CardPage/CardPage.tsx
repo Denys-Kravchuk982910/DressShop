@@ -1,65 +1,65 @@
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import './cardPage.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight, faStar as activeStar, faHeart as activeHeart, faPlus, faMinus, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import classNames from "classnames";
 import { faHeart, faStar } from "@fortawesome/free-regular-svg-icons";
 import BreadCrumbs from "../custom/BreadCrumbs";
 import ProductSlider from "../ProductSlider";
-import { CardType } from "../Card/Card";
-
-export interface Feedback {
-    image: string;
-    name: string;
-    text: string;
-}
+import { Feedback, ProductContext, ProductType } from "../../contexts/ProductContextProvider";
+import { ViewedProductContext } from "../../contexts/ViewedProductContextProvider";
+import { getProducts, serverLink } from "../../data/httpClient";
+import { CartContext } from "../../contexts/CartContextProvider";
+import { LikedContext } from "../../contexts/LikedContextProvider";
 
 export const CardPage = () => {    
-    const cards: CardType[] = [
-        {title: 'KUSHI', shortDesc: 'Футболка біла', price: '1 320 ₴', image: './images/product1.jpg'},
-        {title: 'FROMUS', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product2.jpg'},
-        {title: 'FROMUS2', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product3.jpg'},
-        {title: 'FROMUS2', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product4.jpg'},
-        {title: 'FROMUS2', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product5.jpg'},
-    ];
+    const { viewed, setViewed } = useContext(ViewedProductContext);
+    const { cartItems, setCartItems } = useContext(CartContext);
+    const { likedProducts, setLikedProducts } = useContext(LikedContext);
 
-    const images = [
-        'images/product1.jpg',
-        'images/product2.jpg',
-        'images/product3.jpg'
-    ];
+    const imagesStorage = serverLink + 'images/';
 
-    const sizes = [
-        'XS',
-        'S',
-        'M',
-        'L'
-    ];
+    const { cardId } = useParams();
 
-    const feedbacks : Feedback[] = [ 
-        {
-            image: 'https://avatars.githubusercontent.com/u/114987963?v=4', 
-            name: 'Denys', 
-            text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed'
-        },
-        {
-            image: 'https://avatars.githubusercontent.com/u/114987963?v=4', 
-            name: 'Denys', 
-            text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed'
-        },
-        {
-            image: 'https://avatars.githubusercontent.com/u/114987963?v=4', 
-            name: 'Denys', 
-            text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed'
-        },
-    ]; 
+    const [currentCard, setCurrentCard] = useState<ProductType>({
+        id: 0,
+        title: '',
+        shortDesc: '',
+        price: 0,
+        images: [],
+        description: '',
+        sizes: [],
+        rating: 0,
+        feedbacks: [],
+    });
+
+    useEffect(() => {
+        getProducts().then(response => {
+            const curr = response.find(c => c.id === parseInt(cardId || '0'));
+
+            if (curr) {   
+                setCurrentCard(curr);
+            }
+        });
+    }, [cardId]);
+
+    useEffect(() => {
+        if (!viewed.find(c => c.id === currentCard.id) && currentCard.id !== 0) {
+            setViewed([...viewed, currentCard]);
+        }
+    }, [currentCard]);
+
+    const images = currentCard.images;
+    const sizes = currentCard.sizes;
+
+    const feedbacks : Feedback[] = currentCard.feedbacks; 
 
     const [size, setSize] = useState('');
     const [slide, setSlide] = useState(0);
-    const [liked, setLiked] = useState(false);
     const [open, setOpen] = useState(false);
     const [feedId, setFeedId] = useState(1);
+    const [errorSize, setErrorSize] = useState(false);
 
     const descRef = useRef<HTMLParagraphElement>(null);
 
@@ -77,35 +77,84 @@ export const CardPage = () => {
         maxHeight: open && descRef.current ? `${descRef.current.clientHeight + 20}px` : 0
     }
 
-    const { cardId } = useParams();
+    const getActiveAndDisabled = () => {
+        const active: number[] = [];
+        const disabled: number[] = [];
+
+        for (let i = 0; i < currentCard.rating; i++) {
+            active.push(i + 1);
+        }
+
+        for (let i = 0; i < 5 - currentCard.rating; i++) {
+            disabled.push(i + 1);
+        }
+
+        return {
+            active: active,
+            disabled: disabled
+        } as { active: number[], disabled: number[] };
+    }
+
+    const isInCart = useMemo(() => cartItems
+        .find(el => el.id === currentCard.id && el.size === size),
+        [currentCard, cartItems, size]);
+
+    const isInLiked = useMemo(() => likedProducts
+        .find(el => el.id === currentCard.id),
+        [currentCard, likedProducts]);
+
+    const cartBtnText = useMemo(() => isInCart ? 'Додано в кошик': 'Додати в кошик', [isInCart]);
+
+    const addToCart = () => {
+        if (!size) {
+            setErrorSize(true);
+
+            return;
+        }
+
+        if (!isInCart) {
+            setCartItems([...cartItems, {...currentCard, size: size, count: 1}]);
+        } else {
+            setCartItems([...cartItems
+                .filter(c => !(c.id === currentCard.id && c.size === size))]);
+        }
+    }
+
+    const addToLike = () => {
+        if (!isInLiked) {
+            setLikedProducts([...likedProducts, currentCard]);
+        } else {
+            setLikedProducts([...likedProducts.filter(pr => pr.id !== currentCard.id)]);
+        }
+    }
 
     return (<main className="cardPage">
         <BreadCrumbs />
 
         <section className="cardPage__item">
-            <div className="cardPage__card-image">
-                <div className="cardPage__image-prevs">
-                    {images.map((img, ind) => {
-                        return (
-                            <div 
-                                className={classNames('cardPage__image-prev', {'cardPage__image-prev--active' : slide === ind})}
-                                key={'im' + img}
-                            >
-                                <div className="cardPage__image-prev-wrapper" onClick={() => setSlide(ind)}>
-                                    <img src={img} className="cardPage__image-prev-img" />
-                                </div>
+            <div className="cardPage__image-prevs">
+                {images.map((img, ind) => {
+                    return (
+                        <div 
+                            className={classNames('cardPage__image-prev', {'cardPage__image-prev--active' : slide === ind})}
+                            key={'im' + img}
+                        >
+                            <div className="cardPage__image-prev-wrapper" onClick={() => setSlide(ind)}>
+                                <img src={imagesStorage + img} className="cardPage__image-prev-img" />
                             </div>
-                        );
-                    })}
-                </div>
+                        </div>
+                    );
+                })}
+            </div>
 
+            <div className="cardPage__card-image">
                 <div className="cardPage__image-container">
                     <div className="cardPage__image-wrapper">
                         {images.map((src, ind) => {
                             return (
                                 <img
                                     key={'ind' + src}
-                                    src={src}
+                                    src={imagesStorage + src}
                                     className="cardPage__img"
                                     style={formStyle(ind)}
                                 />
@@ -150,37 +199,29 @@ export const CardPage = () => {
             </div>
 
             <div className="cardPage__content">
-                <h2 className="cardPage__title">Creative Depo</h2>
+                <h2 className="cardPage__title">{currentCard.title}</h2>
 
-                <p className="cardPage__description">Футболка "Ukraine" сіра CREATIVE DEPO 696-905-0004</p>
+                <p className="cardPage__description">{currentCard.shortDesc}</p>
 
                 <div className="cardPage__data">
-                    <p className="cardPage__price">1 500 ₴</p>
+                    <p className="cardPage__price">{currentCard.price} ₴</p>
 
                     <div className="cardPage__rating">
                         <div className="cardPage__stars">
-                            <div className="cardPage__star">
-                                <FontAwesomeIcon width={12} height={12} icon={faStar} />
-                            </div>
+                            {getActiveAndDisabled().active.map((act, ind) => {
+                                return (<div className="cardPage__star" key={act + ind}>
+                                    <FontAwesomeIcon width={12} height={12} icon={activeStar} />
+                                </div>);
+                            })}
 
-                            <div className="cardPage__star">
-                                <FontAwesomeIcon width={12} height={12} icon={faStar} />
-                            </div>
-
-                            <div className="cardPage__star">
-                                <FontAwesomeIcon width={12} height={12} icon={faStar} />
-                            </div>
-
-                            <div className="cardPage__star">
-                                <FontAwesomeIcon width={12} height={12} icon={faStar} />
-                            </div>
-
-                            <div className="cardPage__star">
-                                <FontAwesomeIcon width={12} height={12} icon={faStar} />
-                            </div>
+                            {getActiveAndDisabled().disabled.map((act, ind) => {
+                                return (<div className="cardPage__star" key={act + ind}>
+                                    <FontAwesomeIcon width={12} height={12} icon={faStar} />
+                                </div>);
+                            })}
                         </div>
 
-                        <p className="cardPage__feed-count">0 відгуків</p>
+                        <p className="cardPage__feed-count">{currentCard.feedbacks.length} відгуків</p>
                     </div>
 
                     <div className="cardPage__sizes">
@@ -192,7 +233,12 @@ export const CardPage = () => {
                                             className={classNames('cardPage__size-block', 
                                                 {'cardPage__size-block--active' : s === size})}
                                             key={'size' + s}
-                                            onClick={() => setSize(s)}
+                                            onClick={() => {
+                                                setSize(s);
+
+                                                if (errorSize)
+                                                    setErrorSize(false);
+                                            }}
                                         >
                                     <p className='cardPage__size-block-title'>
                                         {s}
@@ -200,12 +246,30 @@ export const CardPage = () => {
                                 </div>);
                             })}
                         </div>
+
+                        <p 
+                            className={classNames("cardPage__size-error", 
+                            { "cardPage__size-error--active" : errorSize})}
+                        >
+                            Оберіть розмір
+                        </p>
                     </div>
 
                     <div className="cardPage__buttons">
-                        <button className="cardPage__add-to-cart">Додати до кошика</button>
-                        <button className="cardPage__like" onClick={() => setLiked(prev => !prev)}>
-                            <FontAwesomeIcon color="red" icon={liked ? activeHeart : faHeart} />
+                        <button
+                            className={classNames("cardPage__add-to-cart", 
+                                { "cardPage__add-to-cart--active" : isInCart })
+                            }
+                            onClick={addToCart}
+                        >
+                            {cartBtnText}
+                        </button>
+
+                        <button
+                            className="cardPage__like"
+                            onClick={addToLike}
+                        >
+                            <FontAwesomeIcon color="red" icon={isInLiked ? activeHeart : faHeart} />
                         </button>
                     </div>
 
@@ -280,7 +344,7 @@ export const CardPage = () => {
                     return (
                     <div
                         className="cardPage__feedback"
-                        key={ind + feed.name}
+                        key={ind + feed.author}
                         style={feedbackStyle}
                     >
                         <div className="cardPage__feedback-header">
@@ -292,7 +356,7 @@ export const CardPage = () => {
                                     />
                                 </div>
     
-                                <h3 className="cardPage__feedback-name">{feed.name}</h3>
+                                <h3 className="cardPage__feedback-name">{feed.author}</h3>
                             </div>
                                 
                             <div className="cardPage__rating cardPage__rating--is-card">
@@ -322,7 +386,7 @@ export const CardPage = () => {
     
                         <div className="cardPage__feedback-body">
                             <p className="cardPage__feedback-text">
-                                {feed.text}
+                                {feed.comment}
                             </p>
                         </div>
                     </div>);
@@ -330,8 +394,12 @@ export const CardPage = () => {
             </div>
         </section>
 
-        <section className="cardPage__viewed">
-            <ProductSlider isCard cards={cards} title='Переглянуті товари' />
-        </section>
+        {viewed.filter(c => c.id !== currentCard.id).length > 0 && <section className="cardPage__viewed">
+            <ProductSlider
+                isCard
+                cards={viewed.filter(c => c.id !== currentCard.id)}
+                title='Переглянуті товари'
+            />
+        </section>}
     </main>);
 }

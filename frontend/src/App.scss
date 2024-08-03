@@ -4,4 +4,16 @@
     box-sizing: border-box;
 
     font-family: 'Raleway', sans-serif;
+
+    scroll-behavior: smooth;
+}
+
+body {
+    &:has(#loader) {
+        overflow: hidden;
+    }
+
+    &:has(#payment) {
+        overflow: hidden;
+    }
 }

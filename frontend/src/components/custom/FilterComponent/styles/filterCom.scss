@@ -15,6 +15,10 @@
 
         height: 15px;
         width: 15px;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     &__menu-wrapper {
@@ -35,6 +39,7 @@
 
     &__list {
         display: flex;
+        flex-direction: column;
         max-height: 0;
         padding: 0;
         overflow: hidden;
@@ -47,6 +52,10 @@
 
         transition: max-height 0.3s ease-in-out;
     }
+    
+    &__item {
+        cursor: pointer;
+    }
 
     &__link {
         display: block;
@@ -56,5 +65,9 @@
         color: #2b3338;
         text-decoration: none;
         text-transform: uppercase;
+
+        &--active {
+            background-color: #c8c7c782;
+        }
     }
 }

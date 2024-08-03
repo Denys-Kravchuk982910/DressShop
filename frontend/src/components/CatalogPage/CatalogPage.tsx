@@ -1,31 +1,161 @@
-import { useEffect, useState } from "react";
-import { Card, CardType } from "../Card/Card";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { Card } from "../Card/Card";
 import Filter from "../custom/Filter";
 import './styles/catalog.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faSliders } from "@fortawesome/free-solid-svg-icons";
 import FilterComponent from "../custom/FilterComponent";
-import { Link } from "react-router-dom";
 import BreadCrumbs from "../custom/BreadCrumbs";
+import { FilterBlock, ProductContext } from "../../contexts/ProductContextProvider";
+import { getCount, getFilter, getProducts } from "../../data/httpClient";
+import { LoaderContext } from "../../contexts/LoaderContextProvider";
 
 export const CatalogPage = () => {
-    const cards: CardType[] = [
-        {title: 'KUSHI', shortDesc: 'Футболка біла', price: '1 320 ₴', image: './images/product1.jpg'},
-        {title: 'FROMUS', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product2.jpg'},
-        {title: 'FROMUS2', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product3.jpg'},
-        {title: 'FROMUS3', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product4.jpg'},
-        {title: 'FROMUS4', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product5.jpg'}
-    ];
+    const { cards, setCards } = useContext(ProductContext);
 
     const newsOptions = [
         'Новинки',
         'Від дешевшого',
         'Від дорожчого',
-        'Зі знижкою',
+        'За рейтингом',
     ];
 
+    const { setLoad } = useContext(LoaderContext);
+    
     const [newsOption, setNewsOption] = useState(newsOptions[0]);
     const [filterModal, setFitlerModal] = useState(false);
+    const [filterBlock, setFilterBlock] = useState<FilterBlock[]>([]);
+    const [checked, setChecked] = useState<string[]>([]);
+    const [count, setCount] = useState(0);
+    const [page, setPage] = useState(1);
+    const [spec, setSpec] = useState<string|null>(null);
+    
+    const showMore = () => {
+        if(cards.length < count) {
+            getProducts(page + 1)
+            .then(resp => {
+                setPage(prev => prev + 1);
+
+                setCards([...cards, ...resp]);
+            });
+        }
+    }
+
+    const sortBy = (arg: string) => {
+        setNewsOption(arg);
+
+        let tempSpec = '';
+
+        switch(arg) {
+            case newsOptions[0]: {
+                tempSpec = 'default';
+                break;
+            }
+
+            case newsOptions[1]: {
+                tempSpec = 'priceDown'
+                break;
+            }
+
+            case newsOptions[2]: {
+                tempSpec = 'priceTop'
+                break;
+            }
+
+            case newsOptions[3]: {
+                tempSpec = 'rate'
+                break;
+            }
+        }
+
+        tempSpec && setSpec(prev => {
+            const params = prev !== null ? prev.split('&').filter(x => x).filter(x => !x.startsWith('order'))
+                .reduce((prev, curr) => prev + '&' + curr , '') : '';
+
+            return params + `&order=${tempSpec}`;
+        });
+    }
+
+    const setFiletedProducts = useCallback(async (sp: string, page: number) => {
+        const newCardsI = [];
+
+        for (let i = 1; i <= page; i++) {                
+            const resp = await getProducts(i, sp);
+
+            newCardsI.push(...resp);
+        }
+
+        setCards([...newCardsI]);
+        setLoad(false);
+    }, []);
+
+    const editFilters = (filter: string) => {
+        if (checked.includes(filter)) {
+            setChecked(prev => {
+                const current = prev.filter(x => x !== filter);
+
+                setFilters(current);
+
+                return current;
+            });
+        } else {
+            setChecked(prev => {
+                const current = [...prev, filter];
+
+                setFilters(current);
+
+                return current;
+            });
+        }
+    }
+
+    const setFilters = useCallback((checkedCustom: string[]) => {
+        const specTemp = spec !== null ? spec.split('&').filter(temp => temp.startsWith('order'))[0] : '';
+
+        let tempSpec = '';
+        if (specTemp) {
+            tempSpec += '&' + specTemp;
+        }
+
+        for (const check of checkedCustom) {
+            tempSpec += '&category=' + check;
+        }
+
+        setSpec(tempSpec);
+    }, [spec]);
+
+    const clearFilters = useCallback(() => {
+        const specTemp = spec !== null ? spec.split('&').filter(temp => temp.startsWith('order'))[0] : '';
+
+        let tempSpec = '';
+        if (specTemp) {
+            tempSpec += '&' + specTemp;
+        }
+        
+        setSpec(tempSpec);
+        setChecked([]);
+    }, [spec]);
+
+    useEffect(() => {
+        setLoad(true);
+
+        spec !== null && setFiletedProducts(spec, page);
+    }, [spec]);
+
+    useEffect(() => {
+        setLoad(true);
+
+        Promise.all([
+            getCount().then(count => {
+                setCount(count);
+            }),
+    
+            getFilter().then(filters => {
+                setFilterBlock(filters);
+            })
+        ])
+        .finally(() => setLoad(false));
+    }, []);
 
     useEffect(() => {
         if (filterModal) {
@@ -44,20 +174,19 @@ export const CatalogPage = () => {
                 <h1 className="catalog__title-content">Всі товари</h1>
             </div>
 
-
             <div className="catalog__filters">
                 <Filter title="Фільтри" isRest onClick={() => setFitlerModal(prev => !prev)} />
                
                 <Filter 
                     title={newsOption} 
                     options={newsOptions} 
-                    setNewOption={(arg: string) => setNewsOption(arg)} 
+                    setNewOption={sortBy} 
                 />
 
                 <div className="catalog__clear-filter">
                     <FontAwesomeIcon icon={faSliders} />
                     
-                    <p>Стерти фільтри</p>
+                    <p onClick={clearFilters}>Стерти фільтри</p>
                 </div>
             </div>
 
@@ -65,17 +194,18 @@ export const CatalogPage = () => {
                 <div className="catalog__left-filter">
                     <div className="catalog__body">
                         <ul className="catalog__menu-list">
-                            <li className="catalog__menu-item">
-                                <FilterComponent title='Розмір' options={['100грн']} />
-                            </li>
-
-                            <li className="catalog__menu-item">
-                                <FilterComponent title='Ціна' options={['100грн']} />
-                            </li>
-
-                            <li className="catalog__menu-item">
-                                <FilterComponent title='Колір' options={['100грн']} />
-                            </li>
+                            {filterBlock.map((fil, ind) => {
+                                return (
+                                    <li className="catalog__menu-item" key={fil.category + ind}>
+                                        <FilterComponent
+                                            title={fil.category}
+                                            options={fil.filters.map(i => i.title)}
+                                            checked={checked}
+                                            checkItem={editFilters}
+                                        />
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </div>
                 </div>
@@ -83,21 +213,16 @@ export const CatalogPage = () => {
                 <div className="catalog__content-items">
                     {cards.map((card, index) => {
                         return (<div className="catalog__item" key={'card' + index}>
-                            <Card 
-                                title={card.title} 
-                                shortDesc={card.shortDesc}
-                                price={card.price}
-                                image={card.image}
-                            />
+                            <Card {...card} />
                         </div>);
                     })}
                 </div>
             </div>
 
             <div className="catalog__btn-wrapper">
-                <p className="catalog__page-count">Зараз на сторінці 5 з 5 товарів</p>
+                <p className="catalog__page-count">Зараз на сторінці {cards.length} з {count} товарів</p>
 
-                <button className="catalog__btn">Показати більше</button>
+                <button className="catalog__btn" onClick={() => showMore()}>Показати більше</button>
             </div>
         </section>
 
@@ -113,17 +238,18 @@ export const CatalogPage = () => {
 
             <div className="catalog__body">
                 <ul className="catalog__menu-list">
-                    <li className="catalog__menu-item">
-                        <FilterComponent title='Розмір' options={['100грн']} />
-                    </li>
-
-                    <li className="catalog__menu-item">
-                        <FilterComponent title='Ціна' options={['100грн']} />
-                    </li>
-
-                    <li className="catalog__menu-item">
-                        <FilterComponent title='Колір' options={['100грн']} />
-                    </li>
+                    {filterBlock.map((fil, ind) => {
+                        return (
+                            <li className="catalog__menu-item" key={fil.category + ind}>
+                                <FilterComponent
+                                    title={fil.category}
+                                    options={fil.filters.map(i => i.title)}
+                                    checked={checked}
+                                    checkItem={editFilters}
+                                />
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
 

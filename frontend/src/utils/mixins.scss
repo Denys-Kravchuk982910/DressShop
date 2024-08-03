@@ -9,6 +9,12 @@
     object-position: top center;
 }
 
+@mixin on-phone-max {
+    @media (min-width: 560px) {
+        @content;
+    }
+}
+
 @mixin on-tablet {
     @media (min-width: 768px) {
         @content;

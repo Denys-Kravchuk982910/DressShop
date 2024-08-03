@@ -1,20 +1,23 @@
+import { useNavigate } from 'react-router-dom';
 import './styles/style.scss';
+import { ProductType } from '../../contexts/ProductContextProvider';
+import { serverLink } from '../../data/httpClient';
 
-export interface CardType {
-    title: string;
-    shortDesc: string;
-    price: string;
-    image: string;
-}
-
-export const Card: React.FC<CardType> = ({ title, shortDesc, price, image }) => {
-
+export const Card: React.FC<ProductType> = ({ title, shortDesc, price, images, id }) => {
     const defaultImage = 'images/no-image.png'
 
-    return (<div className="card">
+    const imagesStorage = serverLink + 'images/';
+
+    const navigate = useNavigate();
+
+    return (<div className="card" onClick={() => {
+        window.scrollTo(0, 0);
+
+        navigate(`/card/${id}`);
+    }}>
         <div className="card__image-wrapper">
             <img 
-                src={image || defaultImage} 
+                src={images[0] ? imagesStorage + images[0] : defaultImage} 
                 alt="Image" 
                 className="card__image-entity"
             />
@@ -25,7 +28,7 @@ export const Card: React.FC<CardType> = ({ title, shortDesc, price, image }) => 
 
             <p className="card__desc">{shortDesc}</p>
 
-            <p className="card__price">{price}</p>
+            <p className="card__price">{price} ₴</p>
         </div>
     </div>);
 }
