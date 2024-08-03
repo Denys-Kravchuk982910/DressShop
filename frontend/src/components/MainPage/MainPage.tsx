@@ -1,22 +1,39 @@
 import './main.scss';
-import { CardType } from '../Card/Card';
 import ProductSlider from '../ProductSlider';
 import Carousel from '../Carousel';
 import Poster from '../custom/Poster';
 import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { ProductContext, ProductType } from '../../contexts/ProductContextProvider';
+import { getProductsByCustomLink, serverLink } from '../../data/httpClient';
+import { LoaderContext } from '../../contexts/LoaderContextProvider';
+import { ViewedProductContext } from '../../contexts/ViewedProductContextProvider';
 
 export interface Transition {
     leftPixels: number;
 }
 
 export const MainPage = () => {
-    const cards: CardType[] = [
-        {title: 'KUSHI', shortDesc: 'Футболка біла', price: '1 320 ₴', image: './images/product1.jpg'},
-        {title: 'FROMUS', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product2.jpg'},
-        {title: 'FROMUS2', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product3.jpg'},
-        {title: 'FROMUS3', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product4.jpg'},
-        {title: 'FROMUS4', shortDesc: 'Футболка біла', price: '550 ₴', image: './images/product5.jpg'}
-    ];
+    const { setLoad } = useContext(LoaderContext);
+    const { viewed } = useContext(ViewedProductContext);
+
+    const [newsCards, setNewsCards] = useState<ProductType[]>([]);
+    const [popularCards, setPopularCards] = useState<ProductType[]>([]);
+
+    useEffect(() => {
+      const newsCardsLink = `${serverLink}api/product/get?page=1`;  
+      const popularCardsLink = `${serverLink}api/product/get?page=1&order=rate`;
+
+      setLoad(true);
+      
+      Promise.all([
+        getProductsByCustomLink(newsCardsLink).then(setNewsCards),
+        getProductsByCustomLink(popularCardsLink).then(setPopularCards)
+      ])
+        .finally(() => {
+            setLoad(false);
+        });
+    }, []);
 
     return (<main className="main">
         <section className="main__carousel-section main__section">
@@ -24,7 +41,7 @@ export const MainPage = () => {
         </section>
 
         <section className='main__info main__section'>
-            <h3 className='main__info-title'>LOGO IMAGE — інтернет магазин суконь</h3>
+            <h3 className='main__info-title'>Felitsiia — інтернет магазин суконь</h3>
 
             <div className="main__catalog-btns">
                 <Link to="/catalog" className='main__catalog-btn'>Перейти у каталог</Link>
@@ -41,7 +58,7 @@ export const MainPage = () => {
             </div>
 
             <div className="main__content-slider">
-                <ProductSlider cards={cards} title='Новинки' />
+                <ProductSlider cards={newsCards} title='Новинки' />
             </div>
         </section>
 
@@ -55,7 +72,7 @@ export const MainPage = () => {
             </div>
 
             <div className="main__content-slider main__content-slider--left">
-                <ProductSlider cards={cards} title='Популярне' />
+                <ProductSlider cards={popularCards} title='Популярне' />
             </div>
         </section>
 
@@ -65,14 +82,14 @@ export const MainPage = () => {
             </div>
         </section>
 
-        <section className="main__content main__section">
+        {viewed.length > 0 && <section className="main__content main__section">
             <div className="main__content-slider main__content-slider--slider">
                 <ProductSlider 
-                    cards={cards} 
+                    cards={viewed} 
                     title='Переглянуті товари' 
                     isScroll={true}
                 />
             </div>
-        </section>
+        </section>}
     </main>);
 }

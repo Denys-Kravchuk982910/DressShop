@@ -1,0 +1,83 @@
+@import '../../../../utils/mixins.scss';
+
+.adminFilters {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    padding-inline: 10px;
+    padding-top: 50px;
+
+    &__table,
+    &__table-title,
+    &__table-text {
+        border: 1px solid #313237;
+        border-collapse: collapse;
+    }
+
+    &__table {
+        display: block;
+        margin: auto;
+        max-width: 800px;
+
+        border: 1px solid #313237;
+    }
+
+    &__table-title,
+    &__table-text {
+        width: 400px;
+        height: 40px;
+
+        &--tools {
+            width: 20px;
+        }
+
+        text-align: center;
+
+        @include on-tablet {
+            &--tools {
+                width: 40px;
+            }
+        }
+    }
+
+    &__table-input {
+        display: block;
+        margin: auto;
+        height: 35px;
+        width: 95%;
+
+        font-size: 20px;
+    }
+
+    &__table-tools {
+        display: block;
+        max-width: 40px;
+    }
+
+    &__close {
+        margin: 4px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__add {
+        display: block;
+        margin: 10px;
+        padding: 5px 10px;
+        border: 1px solid #313237;
+        outline: 0;
+
+        background-color: #fff;
+
+        transition: background-color 0.3s ease-in-out;
+
+        &:hover {
+            background-color: #313237;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+}

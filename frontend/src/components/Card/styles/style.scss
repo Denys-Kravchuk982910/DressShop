@@ -4,6 +4,10 @@
     display: block;
     width: 100%;
 
+    &:hover {
+        cursor: pointer;
+    }
+
     @include on-desktop {
         max-width: 300px;
 
@@ -12,6 +16,7 @@
 
     &__image-wrapper {
         position: relative;
+        overflow: hidden;
 
         @include setPadding(190, 246);
     }
@@ -24,6 +29,12 @@
         display: block;
         width: 100%;
         height: 100%;
+
+        transition: transform 0.3s ease-in-out;
+
+        &:hover {
+            transform: scale(1.2);
+        }
     }
 
     &__content {

@@ -12,7 +12,7 @@
         margin-bottom: 30px;
         transition: left 0.3s ease-in-out;
 
-        @include setPadding(480px, 230px);
+        @include setPadding(1280, 580);
     }
 
     &__carousel-img {

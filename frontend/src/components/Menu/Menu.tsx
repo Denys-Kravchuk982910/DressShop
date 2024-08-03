@@ -43,11 +43,7 @@ export const Menu = () => {
             </li>
 
             <li className="menu__item">
-                <Link to="/about" onClick={closeMenu} className="menu__link">Про нас</Link>
-            </li>
-
-            <li className="menu__item">
-                <Link to="/payment" onClick={closeMenu} className="menu__link">Питання по оплаті</Link>
+                <Link to="/favourites" onClick={closeMenu} className="menu__link">Фаворити</Link>
             </li>
         </ul>
 

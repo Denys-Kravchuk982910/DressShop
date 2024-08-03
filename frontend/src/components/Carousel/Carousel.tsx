@@ -33,15 +33,15 @@ export const Carousel = () => {
     return (<>
         <div className="carousel">
                 <div className="carousel__carousel-slide" style={styles}>
-                    <img className="carousel__carousel-img" src="images/slider1.jpg" />
+                    <img className="carousel__carousel-img" src="images/Slider1.svg" />
                 </div>
 
                 <div className="carousel__carousel-slide" style={styles}>
-                    <img className="carousel__carousel-img" src='images/slider2.jpg' />
+                    <img className="carousel__carousel-img" src='images/Slider2.svg' />
                 </div>
 
                 <div className="carousel__carousel-slide" style={styles}>
-                    <img className="carousel__carousel-img" src='images/slider3.jpg' />
+                    <img className="carousel__carousel-img" src='images/Slider3.svg' />
                 </div>
             </div>
 

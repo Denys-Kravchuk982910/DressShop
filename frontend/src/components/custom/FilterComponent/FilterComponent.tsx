@@ -7,9 +7,11 @@ import classNames from 'classnames';
 export interface FilterType {
     title: string;
     options: string[];
+    checked: string[];
+    checkItem: (filter: string) => void;
 }
 
-export const FilterComponent : React.FC<FilterType> = ({ title, options }) => {
+export const FilterComponent : React.FC<FilterType> = ({ title, options, checked, checkItem  }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const styles = {
@@ -27,9 +29,24 @@ export const FilterComponent : React.FC<FilterType> = ({ title, options }) => {
         </div>
 
         <ul className={classNames('filterCom__list')} style={isOpen ? styles : {}}>
-            <li className="filterCom__item">
-                <a href="" className="filterCom__link">100 грн</a>
-            </li>
+            {options.map((el, ind) => {
+                return (
+                    <li
+                        className="filterCom__item"
+                        key={'subitem' + el + ind}
+                        onClick={() => {
+                            checkItem(el);
+                        }}
+                    >
+                        <p
+                            className={classNames("filterCom__link", 
+                            { "filterCom__link--active" : checked.includes(el) })}
+                        >
+                            {el}
+                        </p>
+                    </li>
+                );
+            })}
         </ul>
     </div>);
 }
