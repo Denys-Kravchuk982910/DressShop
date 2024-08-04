@@ -1,0 +1,55 @@
+version: '3.9'
+
+networks:
+  mynetwork:
+    driver: bridge
+
+services:
+  backend:
+    build:
+        context: ./DressShopBackend
+        dockerfile: Dockerfile
+    depends_on:
+      - postgresdb
+    restart: always
+    container_name: backendshop-container
+    ports:
+      - "5001:5001"
+    networks:
+      - mynetwork
+    volumes:
+      - images:/app/Images
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Release
+      - ASPNETCORE_HTTP_PORTS=5001
+      - ConnectionStrings__DefaultConnection=User Id=postgres;Password=wfojoJ#F!#FQFA;Server=postgresdb;Port=5432;Database=postgres;
+
+  postgresdb:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5002:5432"
+    environment:
+      - POSTGRES_PASSWORD=wfojoJ#F!#FQFA
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+  frontend:
+    container_name: frontendshop-container
+    ports:
+      - 5003:3000
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    networks:
+      - mynetwork
+    
+
+volumes:
+  images:
+  dbdata:
+
+

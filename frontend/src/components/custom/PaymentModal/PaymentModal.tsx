@@ -75,7 +75,7 @@ const PaymentModal = ({ close } : {close: () => void}) => {
                     deliver: '',
                 });
 
-                setInfo(`Замовлення #${response.id} створено!`);
+                setInfo(`Замовлення #${response.id} створено!\nОчікуйте дзвінок менеджера`);
             })
             .catch(() => {
                 setInfo(`Помилка на сервері!`);

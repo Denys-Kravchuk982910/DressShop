@@ -1,29 +1,20 @@
-# Use the official .NET SDK Images for build environment
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+EXPOSE 5001
 
-# Copy the .csproj and restore as distinct layers
+FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
 COPY ["DressShopBackend/DressShopBackend.csproj", "DressShopBackend/"]
 RUN dotnet restore "DressShopBackend/DressShopBackend.csproj"
-
-# Copy the rest of the project files and build
-COPY ["DressShopBackend/", "DressShopBackend/"]
+COPY . .
 WORKDIR "/src/DressShopBackend"
-RUN dotnet build "DressShopBackend.csproj" -c Release -o /app/build
+RUN dotnet build "DressShopBackend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Publish the project
-RUN dotnet publish "DressShopBackend.csproj" -c Release -o /app/publish
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "DressShopBackend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Use the official ASP.NET Core Images as a base
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM base AS final
 WORKDIR /app
-EXPOSE 80
-
-# Copy the published output and static files
-COPY --from=build /app/publish .
-
-# Copy static files (Images folder)
-COPY ["DressShopBackend/Images", "/app/Images"]
-
-# Set the entrypoint for the container
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "DressShopBackend.dll"]
