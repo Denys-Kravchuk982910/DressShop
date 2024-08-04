@@ -3,7 +3,7 @@ import { Filter } from "../components/FiltersPage/FiltersPage";
 import { LoginError } from "../components/Login/Login";
 import { AddImageResult, AddProduct, AuthUser, EditProduct, OrderData, Product } from "./types/LoginTypes";
 
-const serverLink = 'http://localhost:5002/';
+const serverLink = 'http://localhost:5001/';
 
 export const login = (email: string, password: string) => {
     const url = 'api/user/login';

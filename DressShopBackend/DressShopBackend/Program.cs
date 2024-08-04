@@ -99,6 +99,7 @@ builder.Services.AddCors();
 
 var app = builder.Build();
 
+app.MigrateToDatabase();
 app.SeedAll();
 
 app.UseCors((CorsPolicyBuilder builder) =>
