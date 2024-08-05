@@ -128,3 +128,8 @@ C:\Users\Денис Кравчук\Desktop\Freelance\DressShop\DressShopBackend\
 C:\Users\Денис Кравчук\Desktop\Freelance\DressShop\DressShopBackend\DressShopBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Денис Кравчук\Desktop\Freelance\DressShop\DressShopBackend\DressShopBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Денис Кравчук\Desktop\Freelance\DressShop\DressShopBackend\DressShopBackend\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Денис Кравчук\Desktop\Freelance\DressShop\DressShopBackend\DressShopBackend\bin\Debug\net8.0\SkiaSharp.dll
+C:\Users\Денис Кравчук\Desktop\Freelance\DressShop\DressShopBackend\DressShopBackend\bin\Debug\net8.0\runtimes\osx\native\libSkiaSharp.dylib
+C:\Users\Денис Кравчук\Desktop\Freelance\DressShop\DressShopBackend\DressShopBackend\bin\Debug\net8.0\runtimes\win-arm64\native\libSkiaSharp.dll
+C:\Users\Денис Кравчук\Desktop\Freelance\DressShop\DressShopBackend\DressShopBackend\bin\Debug\net8.0\runtimes\win-x64\native\libSkiaSharp.dll
+C:\Users\Денис Кравчук\Desktop\Freelance\DressShop\DressShopBackend\DressShopBackend\bin\Debug\net8.0\runtimes\win-x86\native\libSkiaSharp.dll

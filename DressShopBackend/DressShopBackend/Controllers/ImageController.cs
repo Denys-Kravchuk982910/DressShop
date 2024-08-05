@@ -1,12 +1,6 @@
 ﻿using DressShopBackend.Models;
 using DressShopBackend.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Buffers.Text;
-using System.Drawing;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Net.NetworkInformation;
 using DressShopBackend.Data.Entities;
 using DressShopBackend.Data;
 using DressShopBackend.Constants;
@@ -31,7 +25,8 @@ namespace DressShopBackend.Controllers
         {
             try
             {
-                string[] edited = imageModel.ImageBase64.Split(',');
+                string[] edited = imageModel.ImageBase64.Contains(",") ? imageModel.ImageBase64.Split(',')
+                 : ("base64," + imageModel.ImageBase64).Split(',');
 
                 string editedStr = "";
 
@@ -40,14 +35,13 @@ namespace DressShopBackend.Controllers
                     editedStr += edited[i];
                 }
 
-                Bitmap bmp = ImageHelper.ConvertToBitmap(editedStr);
 
                 string path = Path.Combine(Directory.GetCurrentDirectory(), "Images");
                 string filename = $"{Guid.NewGuid()}.png";
 
                 string imgPath = Path.Combine(path, filename);
 
-                bmp.Save(imgPath);
+                ImageHelper.SaveImageFromBase64(editedStr, imgPath);
 
 
                 AppImage newImage = new AppImage() 

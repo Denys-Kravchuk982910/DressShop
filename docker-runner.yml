@@ -20,7 +20,7 @@ services:
     volumes:
       - images:/app/Images
     environment:
-      - ASPNETCORE_ENVIRONMENT=Release
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=5001
       - ConnectionStrings__DefaultConnection=User Id=postgres;Password=wfojoJ#F!#FQFA;Server=postgresdb;Port=5432;Database=postgres;
 
