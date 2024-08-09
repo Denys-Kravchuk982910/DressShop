@@ -41,6 +41,12 @@ namespace DressShopBackend.Controllers
         {
             var filter = _context.Filters.FirstOrDefault(filter => filter.Id == id);
 
+            foreach (var filterProduct in _context.FilterProducts.Where(x => x.FilterId == id).ToList())
+            {
+                _context.FilterProducts.Remove(filterProduct);
+                _context.SaveChanges();
+            }
+
             if (filter != null) 
             {
                 _context.Filters.Remove(filter);

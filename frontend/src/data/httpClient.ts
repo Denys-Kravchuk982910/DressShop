@@ -22,6 +22,11 @@ export interface Order {
     id: number;
 }
 
+export interface UserTokenValidate {
+    message: string;
+    isValid: boolean;
+}
+
 export const getProducts = (page: number = 1, query: string = '') => {
     const url = query ?
         `api/product/get?page=${page}${query}`
@@ -59,5 +64,14 @@ export const getFilter = () => {
 export const getCount = () => {
     return fetch(serverLink + 'api/product/count').then(response => {
         return response.json() as Promise<number>;
+    });
+}
+
+export const verifyToken = (token: string) => {
+    return fetch(serverLink + 'api/user/validate', 
+        { method: 'POST', body: JSON.stringify({ token: token }), headers: {
+            'Content-Type': 'application/json',
+        }, }).then(response => {
+        return response.json() as Promise<UserTokenValidate>;
     });
 }

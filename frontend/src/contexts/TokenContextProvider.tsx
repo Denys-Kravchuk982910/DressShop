@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { verifyToken } from "../data/httpClient";
 
 export interface TokenType {
     token: string;
@@ -16,8 +17,17 @@ export const TokenContextProvider = ({ children } : { children: React.ReactNode 
     useEffect(() => {
         const tk = localStorage.getItem('dressshop/token') || '' as string;
 
+        
         if (tk) {
-            setToken(tk);
+            verifyToken(tk).then(resp => {
+                if (resp && resp.isValid) {
+                    setToken(tk);
+                } else {
+                    localStorage.setItem('dressshop/token', '');
+                }
+            }).catch(() => {
+                localStorage.setItem('dressshop/token', '');
+            });
         }
     }, []);
 
