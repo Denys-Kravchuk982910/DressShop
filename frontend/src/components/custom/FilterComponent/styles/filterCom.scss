@@ -54,12 +54,16 @@
     }
     
     &__item {
+        display: block;
+
         cursor: pointer;
+        max-height: 42px;
     }
 
     &__link {
         display: block;
         padding: 15px 30px;
+        max-height: 42px;
 
         font-size: 10px;
         color: #2b3338;

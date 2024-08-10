@@ -15,6 +15,13 @@
 .catalog {
     position: relative;
 
+    &__body {
+        display: block;
+        max-height: 65vh;
+
+        overflow-y: auto;
+    }
+
     &__content {
         display: grid; 
         grid-template-columns: repeat(2, 1fr);
@@ -186,7 +193,8 @@
 
         display: block;
         width: 100%;
-        height: 100%;
+        height: calc(100vh - 40px);
+        overflow-y: hidden;
 
         background-color: #fff;
     }
@@ -202,6 +210,7 @@
         padding: 15px 20px;
 
         border: 1px solid #e0e0e0;
+        background-color: #fff;
     }
 
     &__title {
@@ -217,14 +226,11 @@
     }
 
     &__btns {
-        position: sticky;
-        top: 100%;
+        position: relative;
+        margin-block: 20px;
         left: 0;
 
-        transform: translateY(-100%);
-
         display: block;
-        height: 100px;
     }
 
     &__btn {

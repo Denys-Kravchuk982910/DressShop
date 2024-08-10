@@ -38,7 +38,7 @@ export const ProductSlider : React.FC<ProductSliderType> = ({ cards, title, isSc
             }
         }
 
-        if (slide > pages) {
+        if (slide > pages && pages >= 0 && slide !== pages) {
             setSlide(pages);
         }
     }

@@ -83,7 +83,7 @@
         display: flex;
         overflow: hidden;
 
-        @include setPadding(450, 500);
+        @include setPadding(150, 200);
     }
 
     &__img {

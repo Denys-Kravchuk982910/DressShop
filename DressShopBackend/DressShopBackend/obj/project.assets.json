@@ -6708,11 +6708,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Денис Кравчук\\Desktop\\Freelance\\DressShop\\DressShopBackend\\DressShopBackend\\DressShopBackend.csproj",
+      "projectUniqueName": "C:\\Users\\Денис Кравчук\\Desktop\\Freelance\\DressShop (felitsiiabrand.com.ua)\\DressShopBackend\\DressShopBackend\\DressShopBackend.csproj",
       "projectName": "DressShopBackend",
-      "projectPath": "C:\\Users\\Денис Кравчук\\Desktop\\Freelance\\DressShop\\DressShopBackend\\DressShopBackend\\DressShopBackend.csproj",
+      "projectPath": "C:\\Users\\Денис Кравчук\\Desktop\\Freelance\\DressShop (felitsiiabrand.com.ua)\\DressShopBackend\\DressShopBackend\\DressShopBackend.csproj",
       "packagesPath": "C:\\Users\\Денис Кравчук\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Денис Кравчук\\Desktop\\Freelance\\DressShop\\DressShopBackend\\DressShopBackend\\obj\\",
+      "outputPath": "C:\\Users\\Денис Кравчук\\Desktop\\Freelance\\DressShop (felitsiiabrand.com.ua)\\DressShopBackend\\DressShopBackend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Денис Кравчук\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -254,11 +254,10 @@ export const CatalogPage = () => {
             </div>
 
             <div className="catalog__btns">
-                <button className="catalog__btn" onClick={() => setFitlerModal(false)}>
-                    Застосувати фільтри
-                </button>
-
-                <button className="catalog__btn catalog__btn--white" onClick={() => setFitlerModal(false)}>
+                <button className="catalog__btn catalog__btn--white" onClick={() => {
+                    setFitlerModal(false);
+                    clearFilters();
+                }}>
                     Відмінити фільтри
                 </button>
             </div>

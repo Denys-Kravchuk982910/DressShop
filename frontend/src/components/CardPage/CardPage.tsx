@@ -304,7 +304,7 @@ export const CardPage = () => {
             </div>
         </section>
 
-        <section className="cardPage__feedbacks">
+        {feedbacks && feedbacks.length > 0 && <section className="cardPage__feedbacks">
             <div className="cardPage__scroller">
                 <FontAwesomeIcon
                     className="cardPage__icon"
@@ -392,7 +392,7 @@ export const CardPage = () => {
                     </div>);
                 })}
             </div>
-        </section>
+        </section>}
 
         {viewed.filter(c => c.id !== currentCard.id).length > 0 && <section className="cardPage__viewed">
             <ProductSlider

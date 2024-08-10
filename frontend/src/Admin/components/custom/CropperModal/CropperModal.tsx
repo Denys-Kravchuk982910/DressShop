@@ -15,7 +15,7 @@ const CropperModal: React.FC<CropperType> = ({ url, onCrop, cropperRef }) => {
         <Cropper
             src={url}
             style={{ maxHeight: "600px", width: "100%" }}
-            initialAspectRatio={150 / 200}
+            aspectRatio={150 / 200}
             guides={false}
             crop={onCrop}
             ref={cropperRef}
