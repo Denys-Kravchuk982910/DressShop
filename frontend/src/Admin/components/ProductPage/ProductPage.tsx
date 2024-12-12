@@ -43,6 +43,8 @@ export const ProductPage = () => {
     const [choosenSize, setChoosenSize] = useState('*');
     const [croppImage, setCroppImage] = useState('');
 
+    const [isAddEdit, setIsAddEdit] = useState(false);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -301,24 +303,23 @@ export const ProductPage = () => {
             images: []
         }))
 
-        product.sizes.forEach(size => {
-            setSize(token, resp.id, sizes.filter(x => x.title === size)[0].id);
+        product.sizes.forEach(async (size) => {
+            await setSize(token, resp.id, sizes.filter(x => x.title === size)[0].id);
         });
 
         product.filters.forEach(filterObj => {
-            filterObj.filters.forEach(filter => {
-                addFilterToProduct(token, resp.id, filter.id);
+            filterObj.filters.forEach(async (filter) => {
+                await addFilterToProduct(token, resp.id, filter.id);
             });
         });
 
-        product.images.forEach(image => {
-            addImage(token, resp.id, image)
-                .then(resp => {
-                    setProduct(prev => ({
-                        ...prev,
-                        images: [...prev.images, resp.fileName]
-                    }));
-                });
+        product.images.forEach(async (image) => {
+            const result = await addImage(token, resp.id, image)
+            
+            setProduct(prev => ({
+                ...prev,
+                images: [...prev.images, result.fileName]
+            }));
         })
 
         setProduct(prev => ({
@@ -327,9 +328,13 @@ export const ProductPage = () => {
         }));
 
         navigate('/admin/product/' + resp.id);
+
+        setIsAddEdit(false);
     }
 
     const onChangeProduct = () => {
+        setIsAddEdit(true);
+
         if (product.id !== 0) {
             const editProduct: EditProduct = {
                 id: product.id,
@@ -343,6 +348,9 @@ export const ProductPage = () => {
                 .then(() => {
                     alert('Дані змінено!');
                 })
+                .finally(() => {
+                    setIsAddEdit(false);
+                });
         } else {
             if (product.shortDesc
                 && product.description
@@ -351,7 +359,12 @@ export const ProductPage = () => {
                     const addProduct: AddProduct = { ...product, tag: product.shortDesc };
 
                     createProduct(token, addProduct)
-                        .then(addProductInners);
+                        .then(addProductInners)
+                        .catch(() => {
+                            alert('Виникла помилка додавання даних!');
+
+                            setIsAddEdit(false);
+                        });
             } else {
                 alert('Введіть усі дані!');
             }
@@ -643,6 +656,7 @@ export const ProductPage = () => {
                 <button
                     className='adminProduct__form-submit-btn'
                     onClick={onChangeProduct}
+                    disabled={isAddEdit}
                 >
                     {product.id !== 0 ? 'Змінити' : 'Створити'}
                 </button>

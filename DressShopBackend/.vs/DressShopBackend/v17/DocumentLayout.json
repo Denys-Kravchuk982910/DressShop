@@ -1,10 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\\u0414\u0435\u043D\u0438\u0441 \u041A\u0440\u0430\u0432\u0447\u0443\u043A\\Desktop\\Freelance\\DressShop (felitsiiabrand.com.ua)\\DressShopBackend\\",
+  "WorkspaceRootPath": "D:\\Freelance\\DressShop\\DressShopBackend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{399B932C-82C6-43B3-AEF5-8EA012E6D104}|DressShopBackend\\DressShopBackend.csproj|c:\\users\\\u0434\u0435\u043D\u0438\u0441 \u043A\u0440\u0430\u0432\u0447\u0443\u043A\\desktop\\freelance\\dressshop (felitsiiabrand.com.ua)\\dressshopbackend\\dressshopbackend\\services\\seeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{399B932C-82C6-43B3-AEF5-8EA012E6D104}|DressShopBackend\\DressShopBackend.csproj|solutionrelative:dressshopbackend\\services\\seeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{399B932C-82C6-43B3-AEF5-8EA012E6D104}|DressShopBackend\\DressShopBackend.csproj|d:\\freelance\\dressshop\\dressshopbackend\\dressshopbackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{399B932C-82C6-43B3-AEF5-8EA012E6D104}|DressShopBackend\\DressShopBackend.csproj|solutionrelative:dressshopbackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{399B932C-82C6-43B3-AEF5-8EA012E6D104}|DressShopBackend\\DressShopBackend.csproj|d:\\freelance\\dressshop\\dressshopbackend\\dressshopbackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{399B932C-82C6-43B3-AEF5-8EA012E6D104}|DressShopBackend\\DressShopBackend.csproj|solutionrelative:dressshopbackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{399B932C-82C6-43B3-AEF5-8EA012E6D104}|DressShopBackend\\DressShopBackend.csproj|d:\\freelance\\dressshop\\dressshopbackend\\dressshopbackend\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{399B932C-82C6-43B3-AEF5-8EA012E6D104}|DressShopBackend\\DressShopBackend.csproj|solutionrelative:dressshopbackend\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,15 +27,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Seeder.cs",
-              "DocumentMoniker": "C:\\Users\\\u0414\u0435\u043D\u0438\u0441 \u041A\u0440\u0430\u0432\u0447\u0443\u043A\\Desktop\\Freelance\\DressShop (felitsiiabrand.com.ua)\\DressShopBackend\\DressShopBackend\\Services\\Seeder.cs",
-              "RelativeDocumentMoniker": "DressShopBackend\\Services\\Seeder.cs",
-              "ToolTip": "C:\\Users\\\u0414\u0435\u043D\u0438\u0441 \u041A\u0440\u0430\u0432\u0447\u0443\u043A\\Desktop\\Freelance\\DressShop (felitsiiabrand.com.ua)\\DressShopBackend\\DressShopBackend\\Services\\Seeder.cs",
-              "RelativeToolTip": "DressShopBackend\\Services\\Seeder.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAYwDUAAAAAAAAA",
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Freelance\\DressShop\\DressShopBackend\\DressShopBackend\\Program.cs",
+              "RelativeDocumentMoniker": "DressShopBackend\\Program.cs",
+              "ToolTip": "D:\\Freelance\\DressShop\\DressShopBackend\\DressShopBackend\\Program.cs",
+              "RelativeToolTip": "DressShopBackend\\Program.cs",
+              "ViewState": "AQIAAEcAAAAAAAAAAAAAAGwAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-09T20:53:53.961Z",
+              "WhenOpened": "2024-12-11T23:42:04.266Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Freelance\\DressShop\\DressShopBackend\\DressShopBackend\\appsettings.json",
+              "RelativeDocumentMoniker": "DressShopBackend\\appsettings.json",
+              "ToolTip": "D:\\Freelance\\DressShop\\DressShopBackend\\DressShopBackend\\appsettings.json",
+              "RelativeToolTip": "DressShopBackend\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAABBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-12-11T23:15:31.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "D:\\Freelance\\DressShop\\DressShopBackend\\DressShopBackend\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "DressShopBackend\\Controllers\\ProductController.cs",
+              "ToolTip": "D:\\Freelance\\DressShop\\DressShopBackend\\DressShopBackend\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "DressShopBackend\\Controllers\\ProductController.cs",
+              "ViewState": "AQIAACQAAAAAAAAAAAAYwC8AAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-09T16:04:58.009Z"
             }
           ]
         }

@@ -172,6 +172,15 @@
             cursor: pointer;
             background-color: #313237df;
         }
+
+        &:disabled {
+            background-color: #898a91;
+
+            &:hover {
+                cursor: progress;
+                background-color: #898a91;
+            }
+        }
     }
 
     &__form-input-img {

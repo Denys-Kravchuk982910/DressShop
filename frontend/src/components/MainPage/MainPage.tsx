@@ -41,7 +41,7 @@ export const MainPage = () => {
         </section>
 
         <section className='main__info main__section'>
-            <h3 className='main__info-title'>Felitsiia — інтернет магазин суконь</h3>
+            <h3 className='main__info-title'>Felitsiia — український бренд одягу</h3>
 
             <div className="main__catalog-btns">
                 <Link to="/catalog" className='main__catalog-btn'>Перейти у каталог</Link>
@@ -78,7 +78,7 @@ export const MainPage = () => {
 
         <section className="main__discount main__section">
             <div className="main__discount-wrapper">
-                <img src="images/Poster3.jpg" alt="Poster image" className="main__discount-img" />
+                <img src="images/Slider1.svg" alt="Poster image" className="main__discount-img" />
             </div>
         </section>
 
