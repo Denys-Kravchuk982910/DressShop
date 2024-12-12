@@ -18,7 +18,7 @@ export const CardPage = () => {
     const { cartItems, setCartItems } = useContext(CartContext);
     const { likedProducts, setLikedProducts } = useContext(LikedContext);
 
-    const imagesStorage = serverLink + 'images/';
+    const imagesStorage = '';
 
     const { cardId } = useParams();
 
@@ -35,13 +35,21 @@ export const CardPage = () => {
     });
 
     useEffect(() => {
-        getProducts().then(response => {
-            const curr = response.find(c => c.id === parseInt(cardId || '0'));
+        async function loadProducts() {
+            const products = await getProducts();
+
+            console.log(products);
+
+            const curr = products.find(c => c.id === parseInt(cardId || '0'));
+
+            console.log(curr);
 
             if (curr) {   
                 setCurrentCard(curr);
             }
-        });
+        }
+
+        loadProducts();
     }, [cardId]);
 
     useEffect(() => {

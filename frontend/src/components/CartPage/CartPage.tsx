@@ -49,7 +49,7 @@ export const CartPage = () => {
     const count = cartItems
         .reduce((prev, curr) => prev + curr.count, 0);
 
-    const imagesStorage = serverLink + 'images/';
+    const imagesStorage = '';
 
     return (<main className='cart'>
         {isOpen && <PaymentModal close={() => setOpen(false)} />}

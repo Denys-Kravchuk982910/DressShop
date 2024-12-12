@@ -146,8 +146,8 @@ export const CatalogPage = () => {
         setLoad(true);
 
         Promise.all([
-            getCount().then(count => {
-                setCount(count);
+            getCount().then(data => {
+                setCount(data.length);
             }),
     
             getFilter().then(filters => {

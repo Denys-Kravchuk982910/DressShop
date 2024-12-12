@@ -1,7 +1,7 @@
 import { FilterBlock, ProductType } from "../contexts/ProductContextProvider";
 
 export const serverLink = 'http://localhost:5001/';
-const demoLink = 'api/products.json';
+const demoLink = '/api/products.json';
 
 export interface OrderForm {
     name: string,
@@ -27,13 +27,13 @@ export const getProducts = (page: number = 1, query: string = '') => {
         `api/product/get?page=${page}${query}`
         : `api/product/get?page=${page}`;
 
-    return fetch(serverLink + url).then(response => {
+    return fetch(demoLink).then(response => {
         return response.json() as Promise<ProductType[]>;
     });
 }
 
 export const getProductsByCustomLink = (url: string) => {
-    return fetch(url).then(response => {
+    return fetch(demoLink).then(response => {
         return response.json() as Promise<ProductType[]>;
     });
 }
@@ -49,15 +49,64 @@ export const addOrder = (products: OrderForm) => {
 }
 
 export const getFilter = () => {
-    const url = 'api/Filter/get';
+    // const url = 'api/Filter/get';
 
-    return fetch(serverLink + url).then(response => {
-        return response.json() as Promise<FilterBlock[]>;
-    });
+    // return fetch(serverLink + url).then(response => {
+    //     return response.json() as Promise<FilterBlock[]>;
+    // });
+
+    const filters: FilterBlock[] = [
+        {
+            category: 'Розмір',
+            filters: [
+                {
+                    id: 0,
+                    title: 'M',
+                    category: 'size',
+                },
+                {
+                    id: 1,
+                    title: 'L',
+                    category: 'size',
+                },
+                {
+                    id: 2,
+                    title: 'S',
+                    category: 'size',
+                },
+            ]
+        },
+        {
+            category: 'Колір',
+            filters: [
+                {
+                    id: 3,
+                    title: 'Чорний',
+                    category: 'color',
+                },
+                {
+                    id: 4,
+                    title: 'Червоний',
+                    category: 'color',
+                },
+                {
+                    id: 5,
+                    title: 'Зелений',
+                    category: 'color',
+                },
+            ]
+        }
+    ];
+
+    return Promise.resolve(filters);
 }
 
 export const getCount = () => {
-    return fetch(serverLink + 'api/product/count').then(response => {
-        return response.json() as Promise<number>;
+    // return fetch(serverLink + 'api/product/count').then(response => {
+    //     return response.json() as Promise<number>;
+    // });
+
+    return fetch(demoLink).then(response => {
+        return response.json() as Promise<ProductType[]>;
     });
 }

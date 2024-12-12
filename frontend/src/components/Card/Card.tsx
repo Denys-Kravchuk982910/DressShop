@@ -6,7 +6,7 @@ import { serverLink } from '../../data/httpClient';
 export const Card: React.FC<ProductType> = ({ title, shortDesc, price, images, id }) => {
     const defaultImage = 'images/no-image.png'
 
-    const imagesStorage = serverLink + 'images/';
+    const imagesStorage =''; // serverLink + 'images/';
 
     const navigate = useNavigate();
 
